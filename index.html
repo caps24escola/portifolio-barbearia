@@ -1,14 +1,416 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hello World</title>
-  <link href='/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barbearia Marechal | O Melhor Corte da Região</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- Variáveis e Reset --- */
+        :root {
+            --primary-color: #d4af37; /* Dourado */
+            --bg-dark: #121212;
+            --bg-light: #1e1e1e;
+            --text-color: #f4f4f4;
+            --text-muted: #aaaaaa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth; /* Rolagem suave ao clicar no menu */
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .gold { color: var(--primary-color); }
+
+        /* --- Header --- */
+        header {
+            background-color: rgba(0, 0, 0, 0.9);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--primary-color);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo h1 { font-size: 1.5rem; letter-spacing: 2px; }
+
+        nav ul { display: flex; align-items: center; gap: 20px; }
+
+        nav a {
+            font-size: 0.9rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        nav a:hover { color: var(--primary-color); }
+
+        .btn-nav {
+            background-color: var(--primary-color);
+            color: #000 !important;
+            padding: 8px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-nav:hover { background-color: #fff; }
+
+        /* --- Hero Section (Capa) --- */
+        .hero {
+            height: 100vh;
+            /* Imagem de fundo genérica de barbearia */
+            background: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?ixlib=rb-1.2.1&auto=format&fit=crop&w=1353&q=80') no-repeat center center/cover;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.75); /* Escurece a imagem */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            padding: 20px;
+        }
+
+        .hero h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            color: #fff;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: var(--text-muted);
+        }
+
+        .btn-cta {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: #000;
+            padding: 15px 35px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+
+        .btn-cta:hover {
+            background-color: #fff;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        /* --- Sobre --- */
+        .sobre {
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .sobre-text { margin-bottom: 40px; max-width: 700px; margin-left: auto; margin-right: auto; }
+        .sobre h3 { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px; }
+
+        .sobre-cards {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background-color: var(--bg-light);
+            padding: 30px;
+            border-radius: 8px;
+            width: 280px;
+            border: 1px solid #333;
+            transition: 0.3s;
+        }
+
+        .card:hover { border-color: var(--primary-color); transform: translateY(-5px); }
+        .card i { font-size: 2.5rem; color: var(--primary-color); margin-bottom: 15px; }
+        .card h4 { margin-bottom: 10px; font-size: 1.2rem; }
+        .card p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* --- Serviços --- */
+        .servicos {
+            background-color: var(--bg-light);
+            padding: 80px 0;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #333;
+        }
+
+        .servicos h3 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 50px;
+        }
+
+        .menu-precos { max-width: 800px; margin: 0 auto; padding: 0 20px; }
+
+        .preco-item { margin-bottom: 30px; }
+
+        .nome-servico {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .pontilhado {
+            flex: 1;
+            border-bottom: 2px dotted #444;
+            margin: 0 15px;
+            position: relative;
+            top: -5px;
+        }
+
+        .valor { color: var(--primary-color); font-size: 1.4rem; }
+        .preco-item p { font-size: 0.95rem; color: var(--text-muted); margin-top: 5px; }
+
+        /* --- Footer --- */
+        footer {
+            background-color: #080808;
+            padding-top: 60px;
+            border-top: 4px solid var(--primary-color);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        .footer-info { flex: 1; min-width: 300px; }
+        .footer-info h3 { margin-bottom: 25px; color: var(--primary-color); font-size: 1.8rem; }
+        .footer-info p { margin-bottom: 15px; font-size: 1rem; }
+        .footer-info i { color: var(--primary-color); margin-right: 12px; width: 20px; text-align: center; }
+
+        .social-links { margin-top: 20px; }
+        .social-links a {
+            font-size: 1.8rem;
+            margin-right: 20px;
+            transition: 0.3s;
+            color: #fff;
+        }
+        .social-links a:hover { color: var(--primary-color); }
+
+        .mapa {
+            flex: 1;
+            min-width: 300px;
+            height: 300px;
+            border: 2px solid #333;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .copyright {
+            text-align: center;
+            padding: 25px;
+            background-color: #000;
+            font-size: 0.85rem;
+            color: #555;
+            border-top: 1px solid #222;
+        }
+
+        /* --- Responsividade (Mobile) --- */
+        @media (max-width: 768px) {
+            .nav-container { flex-direction: column; padding-bottom: 10px; }
+            .logo { margin-bottom: 10px; }
+            nav ul { flex-wrap: wrap; justify-content: center; gap: 15px; }
+            
+            .hero h2 { font-size: 2.2rem; }
+            
+            .footer-content { flex-direction: column; }
+            .mapa { width: 100%; height: 250px; }
+            
+            .nome-servico { font-size: 1.1rem; }
+            .valor { font-size: 1.2rem; }
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello, world!</h1>
-  <button onclick="console.log('hello');">Press me</button>
-  <script defer type="text/javascript" src="/main.js"></script>
+
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <h1>BARBEARIA <span class="gold">MARECHAL</span></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Início</a></li>
+                    <li><a href="#servicos">Serviços</a></li>
+                    <li><a href="#localizacao">Localização</a></li>
+                    <li><a href="https://wa.me/5527999999999" target="_blank" class="btn-nav">Agendar <i class="fab fa-whatsapp"></i></a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="overlay"></div>
+        <div class="hero-content">
+            <h2>Estilo e Tradição em <br><span class="gold">Marechal Floriano</span></h2>
+            <p>Corte clássico, barba na toalha quente e cerveja gelada.<br>O cuidado que você merece.</p>
+            <a href="https://wa.me/5527999999999" target="_blank" class="btn-cta">AGENDAR HORÁRIO</a>
+        </div>
+    </section>
+
+    <section class="sobre container">
+        <div class="sobre-text">
+            <h3>A Barbearia</h3>
+            <p>Localizada no coração de Marechal Floriano, nossa barbearia combina técnicas tradicionais com o estilo moderno. Mais do que um corte, oferecemos uma experiência completa de cuidado masculino em um ambiente descontraído com boa música e resenha.</p>
+        </div>
+        <div class="sobre-cards">
+            <div class="card">
+                <i class="fas fa-cut"></i>
+                <h4>Profissionais</h4>
+                <p>Equipe qualificada e atualizada.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-beer"></i>
+                <h4>Ambiente</h4>
+                <p>Cerveja gelada e espaço climatizado.</p>
+            </div>
+            <div class="card">
+                <i class="fas fa-clock"></i>
+                <h4>Pontualidade</h4>
+                <p>Respeito total ao seu horário agendado.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="servicos" class="servicos">
+        <div class="container">
+            <h3>Nossos Serviços</h3>
+            <div class="menu-precos">
+                
+                <div class="preco-item">
+                    <div class="nome-servico">
+                        <h4>Corte de Cabelo</h4>
+                        <span class="pontilhado"></span>
+                        <span class="valor">R$ 35,00</span>
+                    </div>
+                    <p>Degradê, social, militar, tesoura ou máquina.</p>
+                </div>
+                
+                <div class="preco-item">
+                    <div class="nome-servico">
+                        <h4>Barba Terapia</h4>
+                        <span class="pontilhado"></span>
+                        <span class="valor">R$ 30,00</span>
+                    </div>
+                    <p>Toalha quente, massagem facial e pós-barba premium.</p>
+                </div>
+
+                <div class="preco-item">
+                    <div class="nome-servico">
+                        <h4>Combo Completo</h4>
+                        <span class="pontilhado"></span>
+                        <span class="valor">R$ 60,00</span>
+                    </div>
+                    <p>Cabelo + Barba + Sobrancelha.</p>
+                </div>
+
+                <div class="preco-item">
+                    <div class="nome-servico">
+                        <h4>Pezinho / Acabamento</h4>
+                        <span class="pontilhado"></span>
+                        <span class="valor">R$ 15,00</span>
+                    </div>
+                    <p>Manutenção dos contornos.</p>
+                </div>
+
+                <div class="preco-item">
+                    <div class="nome-servico">
+                        <h4>Selagem Masculina</h4>
+                        <span class="pontilhado"></span>
+                        <span class="valor">R$ 50,00</span>
+                    </div>
+                    <p>Alinhamento dos fios.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer id="localizacao">
+        <div class="container footer-content">
+            <div class="footer-info">
+                <h3>Venha nos visitar</h3>
+                <p><i class="fas fa-map-marker-alt"></i> Rua Principal, 123 - Centro<br>Marechal Floriano - ES</p>
+                <p><i class="fas fa-phone"></i> (27) 99999-9999</p>
+                <p><i class="far fa-clock"></i> Terça a Sábado: 09h às 19h</p>
+                
+                <div class="social-links">
+                    <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                </div>
+            </div>
+            
+            <div class="mapa">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3737.5678!2d-40.680!3d-20.410!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjDCsDI0JzM2LjAiUyA0MMKwNDAnNDguMCJX!5e0!3m2!1spt-BR!2sbr!4v1600000000000!5m2!1spt-BR!2sbr" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2024 Barbearia Marechal. Todos os direitos reservados. Design Exclusivo.</p>
+        </div>
+    </footer>
+
 </body>
 </html>
